@@ -24,32 +24,40 @@ const RegistrationForm = (props) => {
 
   const checkform = () => {
     let errors = {};
+    let error = false;
     if (formdata.first_name === "") {
       errors.first_name = true;
+      error = true;
     }
     if (formdata.last_name === "") {
       errors.last_name = true;
+      error = true;
     }
     if (formdata.email === "") {
       errors.email = true;
+      error = true;
     }
     if (formdata.password === "") {
       errors.password = true;
+      error = true;
     }
     if (formdata.type === "") {
       errors.type = true;
+      error = true;
     }
-    if (formdata.number === "") {
-      errors.number = true;
+    if (formdata.phone_number === "") {
+      errors.phone_number = true;
+      error = true;
     }
     if (formdata.confirm_password === "") {
       errors.confirm_password = true;
+      error = true;
     }
-    // if (formdata.password !== formdata.confirm_password) {
-    //   errors.confirm_password = "Password and Confirm Password must be same";
-    // }
+    if (formdata.password !== formdata.confirm_password) {
+      error = true;
+    }
     setErrors(errors);
-    return errors;
+    return error;
   };
 
   const ChangeHandler = (e) => {
@@ -63,12 +71,10 @@ const RegistrationForm = (props) => {
     }
   };
 
-  console.log(formdata);
-  console.log(errors);
   const submitHandler = async (e) => {
     e.preventDefault();
-    await checkform();
-    if (!errors) {
+    let check = await checkform();
+    if (!check) {
       props.handleSubmit(formdata);
     }
   };
